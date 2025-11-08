@@ -2,3 +2,4 @@ __pycache__
 .venv
 test_csv.csv
 test_csv.xlsx
+.DS_Store
