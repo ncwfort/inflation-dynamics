@@ -27,14 +27,16 @@ class Sector:
         new_prices = 0
         # first, check whether wages update
         if(self.wages_update()):
-            wage_percent_change = (self.params.get('freq_w') / freq_max) * self.params.get('mu') * (v_w - last_wage_share)
+            wage_freq_fraction = self.params.get('freq_w') / freq_max
+            wage_percent_change = wage_freq_fraction * self.params.get('mu') * (v_w - last_wage_share)
             new_wages = last_wages * (1 + wage_percent_change)
         else:
             new_wages = last_wages # wages stay the same
         self.wages.append(new_wages)
         # next, check whether prices update
         if(self.prices_update()):
-            prices_percent_change = (self.params.get('freq_f') / freq_max) * self.params.get('phi') * (last_wage_share - v_f)
+            price_freq_fraction = self.params.get('freq_f') / freq_max
+            prices_percent_change = price_freq_fraction * self.params.get('phi') * (last_wage_share - v_f)
             new_prices = last_prices * (1 + prices_percent_change)
         else:
             new_prices = last_prices
@@ -80,6 +82,13 @@ class Sector:
     def get_n_periods(self):
         # how many periods have elapse
         return len(self.wages)
+    
+    """Return the equilibrium value where wages and prices change by the same amount."""
+    def get_equilibrium(self):
+        mu = self.params.get('mu')
+        phi = self.params.get('phi')
+        return (mu * self.params.global_params.v_w + 
+                phi * self.params.global_params.v_f) / (mu + phi)
 
 
     

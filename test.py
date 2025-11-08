@@ -1,13 +1,8 @@
 from params import GlobalParams
 from economy import Economy
 from graphing import GraphingHelper
-from rw import get_params, test_param_reading
+from sectors import Sector
 
-
-def get_equilibrium(sector):
-    params = sector.params
-    return (params.mu * params.global_params.v_w + 
-            params.phi * params.global_params.v_f) / (params.mu + params.phi)
 
 def test_single_sector():
     v_w = 0.7
@@ -39,7 +34,22 @@ def test_single_sector():
     graphing_helper.graph_wages_prices(this_sector)
 
 def main():
-    test_param_reading("test_csv.csv")
+    v_w = 0.7
+    v_f = 0.3
+    mu_bar = 0.5
+    phi_bar = 0.5
+    f_max = 12
+    global_params = GlobalParams(v_w, v_f, mu_bar, phi_bar, f_max)
+    test_economy = Economy(global_params)
+    test_economy.add_sectors_from_csv('test_csv.csv')
+
+    for sector in test_economy.sectors:
+        print(sector.params.data)
+
+    test_economy.advance_n(100)
+    graphing = GraphingHelper()
+    for sector in test_economy.sectors:
+        graphing.simple_graph_wage_share(sector)
 
 
     
