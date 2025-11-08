@@ -12,8 +12,8 @@ class Economy:
         self.sectors = []
 
     # add a new sector 
-    def add_sector(self, w0, p0, a, phi, mu, freq_w, freq_f, lag_w, lag_f, index_weight):
-        params = Params(self.global_params, w0, p0, a, phi, mu, freq_w, freq_f, lag_w, lag_f)
+    def add_sector(self, params):
+        # to implement new version
         new_sector = Sector(params)
         self.sectors.append(new_sector)
 
@@ -26,8 +26,8 @@ class Economy:
     def advance(self):
         for sector in self.sectors:
             sector.update()
-    """Returns sector object located at index."""
     
+    """Returns sector object located at index."""
     def get_sector(self, index):
         return self.sectors[index]
     
@@ -38,17 +38,7 @@ class Economy:
             self.add_sector_from_data(row)
 
     def add_sector_from_data(self, data_row):
-        w0 = data_row[PARAMETER_INDICES['w0']]
-        p0 = data_row[PARAMETER_INDICES['p0']]
-        a = data_row[PARAMETER_INDICES['a']]
-        phi = data_row[PARAMETER_INDICES['phi']]
-        mu = data_row[PARAMETER_INDICES['mu']]
-        freq_w = data_row[PARAMETER_INDICES['freq_w']]
-        freq_f = data_row[PARAMETER_INDICES['freq_f']]
-        lag_w = data_row[PARAMETER_INDICES['lag_w']]
-        lag_f = data_row[PARAMETER_INDICES['lag_f']]
-        index_weight = data_row[PARAMETER_INDICES['index_weight']]
-        self.add_sector(w0, p0, a, phi, mu, 
-                        freq_w, freq_f, lag_w, lag_f, index_weight)
+        sector_params = SectorParams(data_row, self.global_params)
+        self.add_sector(sector_params)
 
 

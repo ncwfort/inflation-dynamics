@@ -11,6 +11,7 @@ def get_params(filename):
         next(reader)
         for row in reader:
             all_params.append(row)
+    return all_params
 
 """ Testing parameter reading. Gets a row of the CSV and feeds it into the new
     parameters modeule that I have created."""

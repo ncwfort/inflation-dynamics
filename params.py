@@ -30,11 +30,15 @@ class SectorParams:
     """An object that stores the local parameters for a given sector, specifications listed below."""
     """Takes in an array and a set of keys. The keys give the parameter name for each index of the array."""
 
-    def __init__(self, raw_param_data):
+    def __init__(self, raw_param_data, global_params : GlobalParams):
         self.data = {}
+        self.global_params = global_params
         for index in PARAMETER_INDICES:
             param_name = PARAMETER_INDICES[index]
             self.data[param_name] = raw_param_data[index]
+        # need to add the local phi and mu values to the global value
+        self.data['phi'] += self.global_params.phi_bar
+        self.data['mu'] += self.global_params.mu_bar
         
-    def get_param(self, param_name):
+    def get(self, param_name):
         return self.data[param_name]
