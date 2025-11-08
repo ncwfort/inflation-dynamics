@@ -24,6 +24,13 @@ class GraphingHelper:
 
     def graph_price_index(self, economy : Economy):
         price_index = economy.calculate_price_index()
-        x_indices = list(range(len(price_index)))
-        plt.plot(x_indices, price_index)
+        self.basic_plot(price_index)
+
+    def graph_period_to_period_inflation(self, economy : Economy):
+        inflation_data = economy.period_to_period_inflation_series()
+        self.basic_plot(inflation_data)
+
+    def basic_plot(self, data_series):
+        x_indices = list(range(len(data_series)))
+        plt.plot(x_indices, data_series)
         plt.show()

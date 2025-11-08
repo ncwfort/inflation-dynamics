@@ -55,10 +55,20 @@ class Economy:
         return price_series
 
     def get_raw_index_value(self, period):
+        """Gets the raw (non-normalized) price index value for a period."""
         value = 0
         for sector in self.sectors:
             value += sector.get_indexed_price(period)
         return value
+    
+    def period_to_period_inflation_series(self):
+        """Calculate a period-to-period inflation rate."""
+        price_index = self.calculate_price_index()
+        inflation_data = []
+        for i in range(1, self.periods):
+            percent_change = (price_index[i] - price_index[i-1]) / price_index[i-1]
+            inflation_data.append(percent_change)
+        return inflation_data
 
 
 

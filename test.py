@@ -41,14 +41,15 @@ def main():
     f_max = 12
     global_params = GlobalParams(v_w, v_f, mu_bar, phi_bar, f_max)
     test_economy = Economy(global_params)
-    test_economy.add_sectors_from_csv('test_csv.csv')
+    test_economy.add_sectors_from_csv('test_csv2.csv')
 
     for sector in test_economy.sectors:
         print(sector.params.data)
 
-    test_economy.advance_n(100)
+    test_economy.advance_n(1000)
     print(test_economy.calculate_price_index())
     grapher = GraphingHelper()
+    grapher.graph_period_to_period_inflation(test_economy)
     grapher.graph_price_index(test_economy)
 
 
