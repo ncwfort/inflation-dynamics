@@ -1,4 +1,4 @@
-from params import Params
+from params import SectorParams
 
 class Sector:
     """Implements the price and wage behavior of a single sector of the economy."""

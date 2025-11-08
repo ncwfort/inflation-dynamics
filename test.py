@@ -1,7 +1,7 @@
 from params import GlobalParams
 from economy import Economy
 from graphing import GraphingHelper
-from rw import get_params
+from rw import get_params, test_param_reading
 
 
 def get_equilibrium(sector):
@@ -39,7 +39,7 @@ def test_single_sector():
     graphing_helper.graph_wages_prices(this_sector)
 
 def main():
-    get_params("test_csv.csv")
+    test_param_reading("test_csv.csv")
 
 
     

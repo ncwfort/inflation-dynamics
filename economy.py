@@ -1,19 +1,8 @@
-from params import Params
+from params import SectorParams
 from sectors import Sector
 import rw
 
-PARAMETER_INDICES = {
-    'w0' : 0,
-    'p0' : 1,
-    'a' : 2,
-    'phi' : 3,
-    'mu' : 4,
-    'freq_w' : 5,
-    'freq_f' : 6,
-    'lag_w' : 7,
-    'lag_f' : 8,
-    'index_weight' : 9
-}
+
 
 class Economy:
     """Basically a collection of all the sectors in the economy"""
