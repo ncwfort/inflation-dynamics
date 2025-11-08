@@ -2,6 +2,7 @@ import matplotlib
 matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 from sectors import Sector
+from economy import Economy
 
 class GraphingHelper:
 
@@ -19,4 +20,10 @@ class GraphingHelper:
         x_indices = list(range(sector.get_n_periods()))
         plt.plot(x_indices, sector.wages)
         plt.plot(x_indices, sector.prices)
+        plt.show()
+
+    def graph_price_index(self, economy : Economy):
+        price_index = economy.calculate_price_index()
+        x_indices = list(range(len(price_index)))
+        plt.plot(x_indices, price_index)
         plt.show()

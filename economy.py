@@ -10,6 +10,7 @@ class Economy:
     def __init__(self, global_params):
         self.global_params = global_params
         self.sectors = []
+        self.periods = 1
 
     # add a new sector 
     def add_sector(self, params):
@@ -26,6 +27,7 @@ class Economy:
     def advance(self):
         for sector in self.sectors:
             sector.update()
+        self.periods += 1
     
     """Returns sector object located at index."""
     def get_sector(self, index):
@@ -40,5 +42,23 @@ class Economy:
     def add_sector_from_data(self, data_row):
         sector_params = SectorParams(data_row, self.global_params)
         self.add_sector(sector_params)
+
+    def calculate_price_index(self):
+        """Calculates the price index, setting the level in the first period to 1."""
+        """Returns an array with the time series of the price index."""
+        # handle the first period and set equal to 1
+        initial_raw_value = self.get_raw_index_value(0)
+        price_series = [1]
+        for i in range(1, self.periods):
+            raw_value = self.get_raw_index_value(i)
+            price_series.append(raw_value / initial_raw_value)
+        return price_series
+
+    def get_raw_index_value(self, period):
+        value = 0
+        for sector in self.sectors:
+            value += sector.get_indexed_price(period)
+        return value
+
 
 

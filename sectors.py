@@ -89,6 +89,16 @@ class Sector:
         phi = self.params.get('phi')
         return (mu * self.params.global_params.v_w + 
                 phi * self.params.global_params.v_f) / (mu + phi)
+    
+    def get_index_weight(self):
+        """Returns the index weight for this sector"""
+        return self.params.get('index_weight')
+    
+    def get_indexed_price(self, period):
+        """Returns this sector's contribution to the overall price index in a particular period"""
+        weight = self.get_index_weight()
+        return self.prices[period] * weight
+
 
 
     

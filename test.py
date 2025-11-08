@@ -47,9 +47,9 @@ def main():
         print(sector.params.data)
 
     test_economy.advance_n(100)
-    graphing = GraphingHelper()
-    for sector in test_economy.sectors:
-        graphing.simple_graph_wage_share(sector)
+    print(test_economy.calculate_price_index())
+    grapher = GraphingHelper()
+    grapher.graph_price_index(test_economy)
 
 
     

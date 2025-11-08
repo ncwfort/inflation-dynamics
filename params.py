@@ -42,3 +42,6 @@ class SectorParams:
         
     def get(self, param_name):
         return self.data[param_name]
+    
+    def set(self, param_name, value):
+        self.data[param_name] = value
