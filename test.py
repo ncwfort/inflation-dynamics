@@ -43,14 +43,12 @@ def main():
     test_economy = Economy(global_params)
     test_economy.add_sectors_from_csv('test_csv2.csv')
 
-    for sector in test_economy.sectors:
-        print(sector.params.data)
 
-    test_economy.advance_n(1000)
-    print(test_economy.calculate_price_index())
+    test_economy.advance_n(200)
     grapher = GraphingHelper()
     grapher.graph_period_to_period_inflation(test_economy)
     grapher.graph_price_index(test_economy)
+    grapher.graph_yoy_inflation(test_economy)
 
 
     

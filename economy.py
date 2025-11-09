@@ -70,5 +70,13 @@ class Economy:
             inflation_data.append(percent_change)
         return inflation_data
 
+    def year_over_year_inflation_series(self):
+        """Calculate a year over year inflation rate."""
+        price_index = self.calculate_price_index()
+        inflation_data = []
+        for i in range(self.periods - 12):
+            percent_change = (price_index[i+12] - price_index[i]) / price_index[i]
+            inflation_data.append(percent_change)
+        return inflation_data
 
 

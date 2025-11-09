@@ -30,7 +30,13 @@ class GraphingHelper:
         inflation_data = economy.period_to_period_inflation_series()
         self.basic_plot(inflation_data)
 
+    def graph_yoy_inflation(self, economy : Economy):
+        inflation_data = economy.year_over_year_inflation_series()
+        self.basic_plot(inflation_data)
+
     def basic_plot(self, data_series):
         x_indices = list(range(len(data_series)))
         plt.plot(x_indices, data_series)
         plt.show()
+
+    
