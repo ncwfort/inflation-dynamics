@@ -34,6 +34,14 @@ class GraphingHelper:
         inflation_data = economy.year_over_year_inflation_series()
         self.basic_plot(inflation_data)
 
+    def graph_ptp_moving_average(self, economy : Economy, window):
+        moving_avg = economy.get_ptp_moving_average(window)
+        self.basic_plot(moving_avg)
+
+    def graph_yoy_moving_average(self, economy : Economy, window):
+        moving_avg = economy.get_yoy_moving_average(window)
+        self.basic_plot(moving_avg)
+
     def basic_plot(self, data_series):
         x_indices = list(range(len(data_series)))
         plt.plot(x_indices, data_series)

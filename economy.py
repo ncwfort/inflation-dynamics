@@ -78,5 +78,21 @@ class Economy:
             percent_change = (price_index[i+12] - price_index[i]) / price_index[i]
             inflation_data.append(percent_change)
         return inflation_data
+    
+    def get_moving_average(self, time_series, window):
+        """Takes the moving average of a particular time series over a particular range"""
+        avg_series = []
+        periods = len(time_series)
+        for i in range(periods - window + 1):
+            data_subset = time_series[i:i+window]
+            avg_series.append(sum(data_subset) / window)
+        return avg_series
+    
+    def get_yoy_moving_average(self, window):
+        return self.get_moving_average(self.year_over_year_inflation_series(), window)
+    
+    def get_ptp_moving_average(self, window):
+        return self.get_moving_average(self.period_to_period_inflation_series(), window)
+
 
 
