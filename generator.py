@@ -28,12 +28,36 @@ class EconomyGenerator:
     def __init__(self, n_sectors, default_globals = True):
         self.n_sectors = n_sectors
         self.global_params = None
-        if (default_globals):
+        if (default_globals): # generate globals according to default
             self.global_params = GlobalParams(V_W_DEFAULT, V_F_DEFAULT,
                                               MU_BAR_DEFAULT, PHI_BAR_DEFAULT, F_MAX)
-        else:
+        else: # draw globals from random distribution
             self.global_params = self.uniform_global_params()
         self.economy = Economy(self.global_params)
+        # specifies default values for each parameter
+        self.params_defaults = {
+            'w0' : 0.6,
+            'p0' : 1.0,
+            'a' : 1.0,
+            'freq_w' : 1.0,
+            'freq_f' : 1.0,
+            'lag_w' : 1.0,
+            'lag_f' : 1.0,
+            'index_weight' : 1 / n_sectors
+        }
+        # specifies whether default is used or randoms are generated
+        self.param_is_default = {
+            'w0' : True,
+            'p0' : True,
+            'a' : True,
+            'phi_i' : True,
+            'mu_i' : True,
+            'freq_w' : False,
+            'freq_f' : False,
+            'lag_w' : False,
+            'lag_f' : False
+        }
+
 
 
     def uniform_global_params(self):
@@ -53,24 +77,58 @@ class EconomyGenerator:
         return self.economy
     
     def generate_sector(self):
-        w0 = rd.uniform(0, 1)
-        p0 = rd.uniform(w0, 1)
-        a = self.get_a(w0, p0)
+        w0 = p0 = a = phi_i = mu_i = freq_w = freq_f = lag_f = lag_w = 0
+        if not self.param_is_default['w0']:
+            w0 = rd.uniform(0, 1)
+        else:
+            w0 = self.params_defaults['w0']
+
+        if not self.param_is_default['p0']:
+            p0 = rd.uniform(w0, 1)
+        else:
+            p0 = self.params_defaults['p0']
+
+        if not self.param_is_default['a']:
+            a = self.get_a(w0, p0)
+        else:
+            a = self.params_defaults['a']
         
         phi_bar = self.global_params.phi_bar
-        phi_i = rd.uniform(-phi_bar, 1 - phi_bar)
+        if self.param_is_default['phi_i']:
+            phi_i = 0
+        else:
+            phi_i = rd.uniform(-phi_bar, 1 - phi_bar)
 
         mu_bar = self.global_params.mu_bar
-        mu_i = rd.uniform(-mu_bar, 1 - mu_bar)
+        if self.param_is_default['phi_i']:
+            mu_i = 0
+        else:
+            mu_i = rd.uniform(-mu_bar, 1 - mu_bar)
 
-        freq_w = rd.randint(1, 12)
-        freq_f = rd.randint(1, 12)
-        lag_w = rd.randint(1, freq_w)
-        lag_f = rd.randint(1, freq_f)
+        if self.param_is_default['freq_w']:
+            freq_w = self.params_defaults['freq_w']
+        else:
+            freq_w = rd.randint(1, 12)
+        if self.param_is_default['freq_f']:
+            freq_f = self.params_defaults['freq_f']
+        else:
+            freq_f = rd.randint(1, 12)
+        if self.param_is_default['lag_w']:
+            lag_w = self.params_defaults['lag_w']
+        else:
+            lag_w = rd.randint(1, freq_w)
+        if self.param_is_default['lag_f']:
+            lag_f = self.params_defaults['lag_f']
+        else:
+            lag_f = rd.randint(1, freq_f)
 
         weight = 1 / self.n_sectors
         sector_data = [w0, p0, a, phi_i, mu_i, freq_w, freq_f, lag_w, lag_f, weight]
         self.economy.add_sector_from_data(sector_data)
+
+    def randomize_time_variables_only(self):
+        """Generates an economy which randomizes time variables only."""
+        self.generate_all_sectors()
 
     def get_a(self, w0, p0):
         """Generates a value for a that behaves reasonably given other values."""
@@ -103,6 +161,8 @@ class EconomyGenerator:
         print(f"Average mu_bar: {sum(mu_bar_list)/ len(mu_bar_list)}")
         print(f"Average phi_bar: {sum(phi_bar_list) / len(phi_bar_list)}")
 
-    def gen_sectors_freq_lag_only(self, n_sectors):
-        """Generates n sectors, with only frequency and lag randomized."""
-    
+    def set_is_default(self, param_name, value):
+        self.param_is_default[param_name] = value
+
+    def set_default_value(self, param_name, value):
+        self.params_defaults[param_name] = value

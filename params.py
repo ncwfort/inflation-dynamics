@@ -52,3 +52,7 @@ class SectorParams:
     
     def set(self, param_name, value):
         self.data[param_name] = value
+
+    def print_params(self):
+        for key in self.data.keys():
+            print(f"{key}: {self.data[key]}")
