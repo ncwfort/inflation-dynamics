@@ -173,3 +173,4 @@ class EconomyGenerator:
         self.param_is_default['lag_w'] = True
         self.param_is_default['lag_f'] = True
         self.generate_all_sectors()
+

@@ -25,26 +25,35 @@ class GraphingHelper:
     def graph_price_index(self, economy : Economy):
         price_index = economy.calculate_price_index()
         self.basic_plot(price_index)
+        plt.show()
 
     def graph_period_to_period_inflation(self, economy : Economy):
         inflation_data = economy.period_to_period_inflation_series()
         self.basic_plot(inflation_data)
+        plt.show()
 
     def graph_yoy_inflation(self, economy : Economy):
         inflation_data = economy.year_over_year_inflation_series()
+        for i in range(len(inflation_data)):
+            inflation_data[i] *= 100
         self.basic_plot(inflation_data)
+        plt.title("Year Over Year Inflation")
+        plt.xlabel("Period")
+        plt.ylabel("Inflation Rate (percent)")
+        plt.show()
 
     def graph_ptp_moving_average(self, economy : Economy, window):
         moving_avg = economy.get_ptp_moving_average(window)
         self.basic_plot(moving_avg)
+        plt.show()
 
     def graph_yoy_moving_average(self, economy : Economy, window):
         moving_avg = economy.get_yoy_moving_average(window)
         self.basic_plot(moving_avg)
+        plt.show()
 
     def basic_plot(self, data_series):
         x_indices = list(range(len(data_series)))
         plt.plot(x_indices, data_series)
-        plt.show()
 
     
