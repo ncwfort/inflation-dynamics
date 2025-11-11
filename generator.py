@@ -69,14 +69,14 @@ class EconomyGenerator:
         phi_bar = rd.uniform(0, 1)
         return GlobalParams(v_w, v_f, mu_bar, phi_bar, f_max)
     
-    def generate_all_sectors(self):
+    def generate_all_sectors(self, match_wages_prices=False):
         for _ in range(self.n_sectors):
-            self.generate_sector()
+            self.generate_sector(match_wages_prices)
     
     def get_economy(self):
         return self.economy
     
-    def generate_sector(self):
+    def generate_sector(self, match_wages_prices : bool):
         w0 = p0 = a = phi_i = mu_i = freq_w = freq_f = lag_f = lag_w = 0
         if not self.param_is_default['w0']:
             w0 = rd.uniform(0, 1)
@@ -111,14 +111,19 @@ class EconomyGenerator:
             freq_w = rd.randint(1, 12)
         if self.param_is_default['freq_f']:
             freq_f = self.params_defaults['freq_f']
+        elif match_wages_prices:
+            freq_f = freq_w
         else:
             freq_f = rd.randint(1, 12)
+
         if self.param_is_default['lag_w']:
             lag_w = self.params_defaults['lag_w']
         else:
             lag_w = rd.randint(1, freq_w)
         if self.param_is_default['lag_f']:
             lag_f = self.params_defaults['lag_f']
+        elif match_wages_prices:
+            lag_f = lag_w
         else:
             lag_f = rd.randint(1, freq_f)
 
@@ -174,3 +179,14 @@ class EconomyGenerator:
         self.param_is_default['lag_f'] = True
         self.generate_all_sectors()
 
+    def freqs_lags_match(self):
+        """ Generates an economy in which only lags and frequencies vary,
+            but wage frequency and lag matches firm frequency and lag across all sectors."""
+        self.generate_all_sectors(match_wages_prices=True)
+
+    def gen_all_defaults(self):
+        "Sets all values to default. Equivalent to a one-sector model."
+        for key in self.param_is_default:
+            self.param_is_default[key] = True
+        self.generate_all_sectors()
+        
