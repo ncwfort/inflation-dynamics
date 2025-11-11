@@ -166,3 +166,10 @@ class EconomyGenerator:
 
     def set_default_value(self, param_name, value):
         self.params_defaults[param_name] = value
+
+    def gen_freq_var_only(self):
+        """Generate a version in which there is only varation in frequency, not in lag."""
+        """Implies that every sector will start in period 1."""
+        self.param_is_default['lag_w'] = True
+        self.param_is_default['lag_f'] = True
+        self.generate_all_sectors()

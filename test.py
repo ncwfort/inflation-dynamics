@@ -50,7 +50,7 @@ def main():
     grapher.graph_yoy_moving_average(test_economy, 6)"""
     n_sectors = 50
     gen = EconomyGenerator(n_sectors)
-    gen.generate_all_sectors()
+    gen.randomize_time_variables_only()
     test_economy = gen.get_economy()
     test_economy.advance_n(100)
     grapher = GraphingHelper()
