@@ -4,21 +4,43 @@ from economy import Economy
 
 TEST_SIMS = 1000 # how many times to run tests to simulate how the random generator is doing.
 F_MAX = 12
+V_W_MAX = 0.9 # max for uniform draws of v_w
+V_W_MIN = 0.5 # min for uniform draws of v_w
+V_F_MIN = 0.1 # max for uniform draws of v_f
+V_F_MAX = 0.5 # max for uniform draws of v_f
+
+W0_DEFAULT = 0.6 # default value for initial wage
+P0_DEFAULT = 1.0 # default value for initial price
+A_DEFAULT = 1.0 # default value for a
+
+#default values for global parameters
+V_W_DEFAULT = 0.7 
+V_F_DEFAULT = 0.5
+MU_BAR_DEFAULT = 0.5
+PHI_BAR_DEFAULT = 0.5
+
 
 class EconomyGenerator:
 
     """This class implements a random economy of n sectors, first generating global parameters."""
+    """to do: add defaults for all values, choice of random"""
 
-    def __init__(self, n_sectors):
+    def __init__(self, n_sectors, default_globals = True):
         self.n_sectors = n_sectors
-        self.global_params = self.gen_global_params()
+        self.global_params = None
+        if (default_globals):
+            self.global_params = GlobalParams(V_W_DEFAULT, V_F_DEFAULT,
+                                              MU_BAR_DEFAULT, PHI_BAR_DEFAULT, F_MAX)
+        else:
+            self.global_params = self.uniform_global_params()
         self.economy = Economy(self.global_params)
 
 
-    def gen_global_params(self):
-        v_w = rd.uniform(0.5, 0.9)
-        v_f = rd.uniform(0.1, 0.9)
-        f_max = 12
+    def uniform_global_params(self):
+        """Generates global params, drawing from a uniform distribution."""
+        v_w = rd.uniform(V_W_MIN, V_W_MAX)
+        v_f = rd.uniform(V_F_MIN, V_F_MAX)
+        f_max = F_MAX
         mu_bar = rd.uniform(0, 1)
         phi_bar = rd.uniform(0, 1)
         return GlobalParams(v_w, v_f, mu_bar, phi_bar, f_max)
@@ -65,6 +87,7 @@ class EconomyGenerator:
         return GlobalParams(v_w, v_f, mu_bar, phi_bar, f_max)
     
     def test_constrained_params(self):
+        """Testing generation of constrained global parameters."""
         v_w_list = []
         v_f_list = []
         mu_bar_list = []
@@ -79,4 +102,7 @@ class EconomyGenerator:
         print(f"Average v_f: {sum(v_f_list) / len(v_f_list)}")
         print(f"Average mu_bar: {sum(mu_bar_list)/ len(mu_bar_list)}")
         print(f"Average phi_bar: {sum(phi_bar_list) / len(phi_bar_list)}")
+
+    def gen_sectors_freq_lag_only(self, n_sectors):
+        """Generates n sectors, with only frequency and lag randomized."""
     

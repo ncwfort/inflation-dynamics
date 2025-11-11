@@ -49,8 +49,8 @@ def main():
     grapher.graph_ptp_moving_average(test_economy, 6)
     grapher.graph_yoy_moving_average(test_economy, 6)"""
     n_sectors = 1000
-    gen = EconomyGenerator(n_sectors)
-    gen.test_constrained_params()
+    gen = EconomyGenerator(n_sectors, default_globals=False)
+    gen.global_params.print_global_params()
 
 
     
