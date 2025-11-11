@@ -13,6 +13,13 @@ class GlobalParams:
         self.phi_bar = phi_bar
         self.frequency_max = frequency_max
 
+    def print_global_params(self):
+        print(f"v_w: {self.v_w}")
+        print(f"v_f: {self.v_f}")
+        print(f"mu_bar: {self.mu_bar}")
+        print(f"phi_bar: {self.phi_bar}")
+        print(f"max frequency: {self.frequency_max}")
+
 PARAMETER_INDICES = {
     0 : 'w0',
     1 : 'p0',

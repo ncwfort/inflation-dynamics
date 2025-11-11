@@ -35,6 +35,7 @@ def test_single_sector():
     graphing_helper.graph_wages_prices(this_sector)
 
 def main():
+    """
     n_sectors = 1000
     gen = EconomyGenerator(n_sectors)
     gen.generate_all_sectors()
@@ -46,7 +47,10 @@ def main():
     grapher.graph_price_index(test_economy)
     grapher.graph_yoy_inflation(test_economy)
     grapher.graph_ptp_moving_average(test_economy, 6)
-    grapher.graph_yoy_moving_average(test_economy, 6)
+    grapher.graph_yoy_moving_average(test_economy, 6)"""
+    n_sectors = 1000
+    gen = EconomyGenerator(n_sectors)
+    gen.test_constrained_params()
 
 
     
