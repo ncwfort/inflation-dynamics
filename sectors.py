@@ -22,24 +22,20 @@ class Sector:
         freq_max = self.params.global_params.frequency_max
         v_f = self.params.global_params.v_f
         v_w = self.params.global_params.v_w
-        # defatuls to 0
-        new_wages = 0
-        new_prices = 0
+        # defaults to 0
+        new_wages = last_wages
+        new_prices = last_prices
         # first, check whether wages update
         if(self.wages_update()):
             wage_freq_fraction = self.params.get('freq_w') / freq_max
             wage_percent_change = wage_freq_fraction * self.params.get('mu') * (v_w - last_wage_share)
             new_wages = last_wages * (1 + wage_percent_change)
-        else:
-            new_wages = last_wages # wages stay the same
         self.wages.append(new_wages)
         # next, check whether prices update
         if(self.prices_update()):
             price_freq_fraction = self.params.get('freq_f') / freq_max
             prices_percent_change = price_freq_fraction * self.params.get('phi') * (last_wage_share - v_f)
             new_prices = last_prices * (1 + prices_percent_change)
-        else:
-            new_prices = last_prices
         self.prices.append(new_prices)
         self.wage_shares.append(self.calc_wage_share())
 

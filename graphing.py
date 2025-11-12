@@ -55,5 +55,6 @@ class GraphingHelper:
     def basic_plot(self, data_series):
         x_indices = list(range(len(data_series)))
         plt.plot(x_indices, data_series)
+        plt.ticklabel_format(useOffset=False)
 
     

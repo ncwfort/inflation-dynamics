@@ -48,11 +48,11 @@ def main():
     grapher.graph_yoy_inflation(test_economy)
     grapher.graph_ptp_moving_average(test_economy, 6)
     grapher.graph_yoy_moving_average(test_economy, 6)"""
-    n_sectors = 50
+    n_sectors = 10
     gen = EconomyGenerator(n_sectors)
     gen.gen_all_defaults()
     test_economy = gen.get_economy()
-    test_economy.advance_n(120)
+    test_economy.advance_n(50)
     grapher = GraphingHelper()
     grapher.graph_period_to_period_inflation(test_economy)
     grapher.graph_price_index(test_economy)

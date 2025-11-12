@@ -100,7 +100,7 @@ class EconomyGenerator:
             phi_i = rd.uniform(-phi_bar, 1 - phi_bar)
 
         mu_bar = self.global_params.mu_bar
-        if self.param_is_default['phi_i']:
+        if self.param_is_default['mu_i']:
             mu_i = 0
         else:
             mu_i = rd.uniform(-mu_bar, 1 - mu_bar)
