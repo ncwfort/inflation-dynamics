@@ -49,7 +49,12 @@ class GraphingHelper:
 
     def graph_yoy_moving_average(self, economy : Economy, window):
         moving_avg = economy.get_yoy_moving_average(window)
+        for i in range(len(moving_avg)):
+            moving_avg[i] *= 100
         self.basic_plot(moving_avg)
+        plt.title("Year Over Year Inflation - 6 Month Moving Average")
+        plt.xlabel("Period")
+        plt.ylabel("Inflation Rate (percent)")
         plt.show()
 
     def basic_plot(self, data_series):

@@ -36,7 +36,7 @@ class EconomyGenerator:
         self.economy = Economy(self.global_params)
         # specifies default values for each parameter
         self.params_defaults = {
-            'w0' : 0.6,
+            'w0' : 0.68,
             'p0' : 1.0,
             'a' : 1.0,
             'freq_w' : 1.0,
