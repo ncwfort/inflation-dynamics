@@ -57,7 +57,7 @@ RAND_MIN = {
 }
 
 OTHER_CONSTRAINTS = {
-    'lags_match' : True # whether wage and price lags match each other
+    'lags_match' : False # whether wage and price lags match each other
 }
 
 

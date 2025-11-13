@@ -3,6 +3,8 @@ from economy import Economy
 from graphing import GraphingHelper
 from sectors import Sector
 from generator import EconomyGenerator
+from gen import Generator
+from settings import Settings
 
 
 def test_single_sector():
@@ -36,9 +38,9 @@ def test_single_sector():
 
 def graphing_test():
     n_sectors = 500
-    gen = EconomyGenerator(n_sectors)
-    gen.randomize_time_variables_only()
-    test_economy = gen.get_economy()
+    settings = Settings()
+    gen = Generator()
+    test_economy = gen.generate(settings, n_sectors)
     test_economy.advance_n(150)
     grapher = GraphingHelper()
     grapher.graph_period_to_period_inflation(test_economy)
@@ -61,6 +63,7 @@ def main():
     grapher.graph_yoy_inflation(test_economy)
     grapher.graph_ptp_moving_average(test_economy, 6)
     grapher.graph_yoy_moving_average(test_economy, 6)"""
+    
     graphing_test()
 
 

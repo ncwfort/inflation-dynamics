@@ -25,7 +25,6 @@ class Generator:
         self.settings = settings
         self.n_sectors = n_sectors
         self.global_params = self.gen_global_params()
-        self.global_params.print_global_params()
         self.economy = Economy(self.global_params)
         for _ in range(n_sectors):
             self.gen_sector()
