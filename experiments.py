@@ -59,7 +59,11 @@ def get_average_no_lag_match():
                                                   n_periods=100))
     return sum(inflation_rates) / len(inflation_rates)
 
-
+"""
+Next: do a 50 sector economy.
+Let the difference between worker and employer targets range from 0.01 to 0.4
+in increments of 0.4.
+"""
 
 def main():
     print(get_average_when_lags_match())
