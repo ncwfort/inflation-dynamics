@@ -42,6 +42,7 @@ RAND_MAX = {
     'v_f' : 1.0,
     'mu_bar' : 1.0,
     'phi_bar' : 1.0,
+    'freq_max' : 100
 }
 
 RAND_MIN = {
