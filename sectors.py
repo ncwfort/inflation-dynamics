@@ -119,6 +119,13 @@ class Sector:
     def get_indexed_price(self, period):
         weight = self.get_index_weight()
         return self.prices[period] * weight
+    
+    def print_wages_and_prices(self):
+        for i in range(len(self.prices)):
+            print(f"Period {i}")
+            print(f"Wages: {self.wages[i]}")
+            print(f"Prices: {self.prices[i]}")
+            print('\n')
 
 
 

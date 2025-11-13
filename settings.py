@@ -10,7 +10,7 @@ GLOBAL_DEFAULTS = {
 }
 
 SECTOR_DEFAULTS = {
-    'w0' : 0.65,
+    'w0' : 0.6,
     'p0' : 1.0,
     'a' : 1.0,
     'freq_w' : 1.0,
@@ -109,3 +109,15 @@ class Settings:
     
     def lags_match(self):
         return self.constraints['lags_match']
+    
+    def set_global_default(self, name, value):
+        self.global_defaults[name] = value
+
+    def set_sector_default(self, name, value):
+        self.sector_defaults[name] = value
+
+    def set_is_default(self, name, value):
+        self.is_default[name] = value
+
+    def set_lags_match(self, value):
+        self.constraints['lags_match'] = value
