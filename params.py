@@ -74,3 +74,4 @@ class SectorParams:
     def print_params(self):
         for key in self.data.keys():
             print(f"{key}: {self.data[key]}")
+        print('\n')
