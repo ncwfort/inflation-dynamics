@@ -37,11 +37,11 @@ def test_single_sector():
     graphing_helper.graph_wages_prices(this_sector)
 
 def graphing_test():
-    n_sectors = 1
+    n_sectors = 500
     settings = Settings()
     gen = Generator()
     test_economy = gen.generate(settings, n_sectors)
-    test_economy.advance_n(150)
+    test_economy.advance_n(200)
     grapher = GraphingHelper()
     grapher.graph_period_to_period_inflation(test_economy)
     grapher.graph_price_index(test_economy)

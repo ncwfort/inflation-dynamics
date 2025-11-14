@@ -1,6 +1,7 @@
 from params import SectorParams, GlobalParams
 from sectors import Sector
 import rw
+from tqdm import tqdm
 
 
 
@@ -29,7 +30,7 @@ class Economy:
 
         n: the number of periods to advance        
         """
-        for _ in range(n):
+        for _ in tqdm(range(n)):
             self.advance()
 
 
