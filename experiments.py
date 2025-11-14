@@ -7,7 +7,7 @@ from settings import Settings
 from gen import Generator
 from tqdm import tqdm
 
-N_SIMS = 10_000
+N_SIMS = 100
 
 def equilibrium_wage(settings : Settings):
     """
@@ -62,12 +62,46 @@ def get_average_no_lag_match():
 """
 Next: do a 50 sector economy.
 Let the difference between worker and employer targets range from 0.01 to 0.4
-in increments of 0.4.
+in increments of 0.01.
 """
+def yoy_inflation_based_on_desire_offset(lags_match : bool, n_sectors, 
+                                         n_periods):
+    increment = 0.01
+    desire_offsets = []
+    inflation_rate = []
+    gen = Generator()
+    settings = Settings()
+    settings.set_lags_match(lags_match)
+    eq_value = 0.6
+    for i in tqdm(range(80)):
+        desire_offset = (i + 1) * increment
+        desire_offsets.append(desire_offset)
+        rates = []
+        for _ in range(N_SIMS):
+            v_w = eq_value + desire_offset / 2
+            v_f = eq_value - desire_offset / 2
+            settings.set_global_default('v_w', v_w)
+            settings.set_global_default('v_f', v_f)
+            test_economy = gen.generate(settings, n_sectors)
+            test_economy.advance_n(n_periods)
+            yoy_inflation = test_economy.year_over_year_inflation_series()
+            rates.append(sum(yoy_inflation) / len(yoy_inflation))
+        inflation_rate.append(sum(rates) / len(rates))
+    return [desire_offsets, inflation_rate]
+
+
+
+
 
 def main():
-    print(get_average_when_lags_match())
-    print(get_average_no_lag_match())
+    lags_match = yoy_inflation_based_on_desire_offset(lags_match=True, 
+                                                      n_sectors=20,
+                                                      n_periods=100)
+    lags_no_match = yoy_inflation_based_on_desire_offset(lags_match=False,
+                                                         n_sectors=20,
+                                                         n_periods=100)
+    gr = GraphingHelper()
+    gr.compare_lines(lags_match, lags_no_match)
 
 
 if __name__ == '__main__':

@@ -94,6 +94,15 @@ class GraphingHelper:
         x_indices = list(range(len(data_series))) # get a list with all indices
         plt.plot(x_indices, data_series)
         plt.ticklabel_format(useOffset=False)
+    
+    def compare_lines(self, series_a, series_b):
+        a_x = series_a[0]
+        a_y = series_a[1]
+        b_x = series_b[0]
+        b_y = series_b[1]
+        plt.plot(a_x, a_y)
+        plt.plot(b_x, b_y, color = 'red')
+        plt.show()
 
 
 def convert_to_percent(data_series):
@@ -103,6 +112,7 @@ def convert_to_percent(data_series):
     """
     for i in range(len(data_series)):
         data_series[i] *= 100
+
 
 
     
