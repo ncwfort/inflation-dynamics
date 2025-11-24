@@ -78,7 +78,7 @@ class GraphingHelper:
         moving_avg = economy.get_yoy_moving_average(window)
         convert_to_percent(moving_avg)
         self.basic_plot(moving_avg)
-        plt.title("Year Over Year Inflation - 6 Month Moving Average")
+        plt.title(f"\"Year Over Year\" Inflation - {window} Month Moving Average")
         plt.xlabel("Period")
         plt.ylabel("Inflation Rate (percent)")
         plt.show()
@@ -100,8 +100,14 @@ class GraphingHelper:
         a_y = series_a[1]
         b_x = series_b[0]
         b_y = series_b[1]
-        plt.plot(a_x, a_y)
-        plt.plot(b_x, b_y, color = 'red')
+        plt.plot(a_x, a_y, label='Prices and Wages Change in Sync')
+        plt.plot(b_x, b_y, color = 'red',
+                 label = 'Prices and Wages Change Randomly')
+        plt.xlabel("Desire Offset (v_w - v_f)")
+        plt.ylabel("Average Inflation Rate")
+        plt.title("Relationship Between Wage-Price Change Synchronization" + 
+                  " and Average Inflation Rate")
+        plt.legend()
         plt.show()
 
 

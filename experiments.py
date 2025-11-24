@@ -59,13 +59,14 @@ def get_average_no_lag_match():
                                                   n_periods=100))
     return sum(inflation_rates) / len(inflation_rates)
 
-"""
-Next: do a 50 sector economy.
-Let the difference between worker and employer targets range from 0.01 to 0.4
-in increments of 0.01.
-"""
+
 def yoy_inflation_based_on_desire_offset(lags_match : bool, n_sectors, 
                                          n_periods):
+    """
+    Next: do a 50 sector economy.
+    Let the difference between worker and employer targets range from 0.01 to 0.4
+    in increments of 0.01.
+    """
     increment = 0.01
     desire_offsets = []
     inflation_rate = []
@@ -90,19 +91,30 @@ def yoy_inflation_based_on_desire_offset(lags_match : bool, n_sectors,
     return [desire_offsets, inflation_rate]
 
 
-
-
-
-def main():
+def compare_lag_constraints():
     lags_match = yoy_inflation_based_on_desire_offset(lags_match=True, 
-                                                      n_sectors=20,
+                                                      n_sectors=50,
                                                       n_periods=100)
     lags_no_match = yoy_inflation_based_on_desire_offset(lags_match=False,
-                                                         n_sectors=20,
+                                                         n_sectors=50,
                                                          n_periods=100)
     gr = GraphingHelper()
     gr.compare_lines(lags_match, lags_no_match)
 
+def completely_random_run(n_sectors, n_periods):
+    """
+    Does a completely random run of the model, other than the price index.
+    """
+    settings = Settings()
+    settings.set_all_random()
+    gen = Generator()
+    economy = gen.generate(settings, n_sectors)
+    economy.advance_n(n_periods)
+    gr = GraphingHelper()
+    gr.graph_yoy_moving_average(economy, 6)
+
+def main():
+    completely_random_run(500, 200)
 
 if __name__ == '__main__':
     main()

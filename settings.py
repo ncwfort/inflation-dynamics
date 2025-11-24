@@ -60,6 +60,9 @@ OTHER_CONSTRAINTS = {
     'lags_match' : False # whether wage and price lags match each other
 }
 
+AGGREGATE_STOCHASTIC = False
+LOCALLY_STOCHASTIC = False
+
 
 
 class Settings:
@@ -91,6 +94,7 @@ class Settings:
         self.rand_max = RAND_MAX
         self.rand_min = RAND_MIN
         self.constraints = OTHER_CONSTRAINTS
+        self.agg_stoch = AGGREGATE_STOCHASTIC
 
     def get_global_default(self, param_name):
         return self.global_defaults[param_name]
@@ -121,3 +125,18 @@ class Settings:
 
     def set_lags_match(self, value):
         self.constraints['lags_match'] = value
+
+    def set_agg_stoch(self, value):
+        """Set whether aggregate stochastic shock."""
+        self.agg_stoch = value
+
+    def is_stochastic(self):
+        return self.agg_stoch
+    
+    def set_all_random(self):
+        """
+        Sets all parameters to be random except for the price index.
+        """
+        for key in self.is_default:
+            if not (key == 'index_weight' or key == 'freq_max'):
+                self.set_is_default(key, False)

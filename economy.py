@@ -30,7 +30,7 @@ class Economy:
 
         n: the number of periods to advance        
         """
-        for _ in tqdm(range(n)):
+        for _ in range(n):
             self.advance()
 
 

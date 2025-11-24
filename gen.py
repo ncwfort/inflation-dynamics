@@ -24,6 +24,7 @@ class Generator:
         """
         self.settings = settings
         self.n_sectors = n_sectors
+        is_stochastic = settings.is_stochastic()
         self.global_params = self.gen_global_params()
         self.economy = Economy(self.global_params)
         for _ in range(n_sectors):
@@ -65,6 +66,7 @@ class Generator:
 
 
     def get_w0(self, p0):
+        """Generates the initial wage, either by default or stochastic."""
         settings = self.settings
         name = 'w0'
         if settings.check_if_default(name):
@@ -75,6 +77,7 @@ class Generator:
             return rd.uniform(rand_min, rand_max)
 
     def get_p0(self):
+        """Generates the initial price, either by default or stochastic."""
         settings = self.settings
         name = 'p0'
         if settings.check_if_default(name):
