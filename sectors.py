@@ -130,6 +130,16 @@ class Sector:
             print(f"Prices: {self.prices[i]}")
             print('\n')
 
+    def shock(self, size):
+        """
+        Simulates a shock to the sector's prices. 'Size' gives the size of the
+        shock, as a proportion of the previous period's prices.
+        Assumes that the last period is greater than or equal to 1, as it calls
+        the period before.
+        """
+        previous_price = self.prices[-2]
+        self.prices[-1] += size * previous_price
+
 
 
     

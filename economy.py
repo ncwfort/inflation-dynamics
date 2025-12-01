@@ -2,18 +2,26 @@ from params import SectorParams, GlobalParams
 from sectors import Sector
 import rw
 from tqdm import tqdm
+import numpy as np
 
-
+# temporarily hard wiring constants here
+ALPHA = 0.4
+SIGMA_ETA = 0.01
 
 class Economy:
     """Basically a collection of all the sectors in the economy. Allows
         collection of multiple sectors and the updating of multiple sectors
         at a time. Also handles price index calculation."""
     
-    def __init__(self, global_params: GlobalParams):
+    def __init__(self, global_params: GlobalParams, stochastic = False):
         self.global_params = global_params
         self.sectors = []
         self.periods = 1 # includes the inital values as a period
+        self.stochastic = stochastic
+        self.shocks = [0]
+
+    def set_stochastic(self, value):
+        self.stochastic = value
 
     def add_sector(self, params : SectorParams):
         """
@@ -38,6 +46,8 @@ class Economy:
         """Advances each sector by a single period and updates period number"""
         for sector in self.sectors:
             sector.update() # uses sector's built-in update methods
+        if self.stochastic:
+            self.stochastic_shocks(ALPHA, SIGMA_ETA)
         self.periods += 1
     
     def get_sector(self, index):
@@ -167,5 +177,18 @@ class Economy:
         return self.get_moving_average(self.period_to_period_inflation_series(), 
                                        window)
 
+    def shock_all_sectors(self, shock_size):
+        """
+        Exogenously shocks all sectors with a price increase.
+        'Size' is the magnitude of the shock, in terms of the proportion of
+        previous prices.
+        """
+        for sector in self.sectors:
+            sector.shock(shock_size)
+
+    def stochastic_shocks(self, alpha, sigma_eta):
+        this_shock = alpha * self.shocks[-1] + np.random.normal(0, sigma_eta)
+        self.shock_all_sectors(this_shock)
+        self.shocks.append(this_shock)
 
 

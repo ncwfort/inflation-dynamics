@@ -144,8 +144,39 @@ def semi_random(n_sectors, n_periods):
     gr = GraphingHelper()
     gr.graph_yoy_inflation(economy)
 
+def test_shock(n_sectors, n_periods, shock_period, shock_size):
+    settings = Settings()
+    settings.set_global_default('mu_bar', 0.1)
+    gen = Generator()
+    economy = gen.generate(settings, n_sectors)
+    economy.advance_n(shock_period)
+    economy.shock_all_sectors(shock_size)
+    economy.advance_n(n_periods - shock_period)
+    gr = GraphingHelper()
+    gr.graph_yoy_inflation(economy)
+
+def test_shock_no_variability(n_sectors, n_periods, shock_period, shock_size):
+    settings = Settings()
+    settings.set_all_defaults()
+    gen = Generator()
+    economy = gen.generate(settings, n_sectors)
+    economy.advance_n(shock_period)
+    economy.shock_all_sectors(shock_size)
+    economy.advance_n(n_periods - shock_period)
+    gr = GraphingHelper()
+    gr.graph_period_to_period_inflation(economy)
+
+def run_stochastic(n_sectors, n_periods):
+    settings = Settings()
+    gen = Generator()
+    economy = gen.generate(settings, n_sectors)
+    economy.set_stochastic(True)
+    economy.advance_n(n_periods)
+    gr = GraphingHelper()
+    gr.graph_yoy_inflation(economy)
+
 def main():
-    semi_random(500, 200)
+    run_stochastic(100, 100)
 
 if __name__ == '__main__':
     main()
