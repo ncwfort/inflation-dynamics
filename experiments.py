@@ -113,8 +113,25 @@ def completely_random_run(n_sectors, n_periods):
     gr = GraphingHelper()
     gr.graph_yoy_moving_average(economy, 6)
 
-def main():
-    completely_random_run(500, 200)
+def simple_staggered_economy(n_periods):
+    settings = Settings()
+    settings.set_all_defaults()
+    settings.set_sector_default('freq_f', 2)
+    settings.set_sector_default('freq_w', 2)
+    settings.set_sector_default('lag_w', 2)
+    settings.set_global_default('phi_bar', 0.1)
+    settings.set_global_default('mu_bar', 0.3)
+    settings.set_sector_default('w0', 0.575)
+    settings.set_global_default('freq_max', 2)
+    gen = Generator()
+    economy = gen.generate(settings, 1)
+    economy.advance_n(n_periods)
+    gr = GraphingHelper()
+    gr.simple_graph_wage_share(economy.sectors[0])
+    # have learned that the magnitude of variation around equilibrium wage
+    # share in either direction depends on which 'moves first'
 
+def main():
+    compare_lag_constraints()
 if __name__ == '__main__':
     main()

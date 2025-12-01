@@ -13,7 +13,7 @@ class Sector:
 
     
     """ Updates wages and prices for a single period, according to
-        differential equation specifying the dynamics of the model."""
+        difference equation specifying the dynamics of the model."""
     def update(self):
         # get most recent wages, prices, wage share
         last_wages = self.get_last_wages()
@@ -43,7 +43,7 @@ class Sector:
             freq_fraction = self.params.get('freq_f') / freq_max
             # get departure from aspiration value
             diff_from_desired = last_wage_share - v_f
-            phi = self.params.get('mu')
+            phi = self.params.get('phi')
             prices_percent_change = freq_fraction * diff_from_desired * phi
             new_prices = last_prices * (1 + prices_percent_change)
         self.prices.append(new_prices)
@@ -107,8 +107,11 @@ class Sector:
     def get_ws_equilibrium(self):
         mu = self.params.get('mu')
         phi = self.params.get('phi')
-        return (mu * self.params.global_params.v_w + 
-                phi * self.params.global_params.v_f) / (mu + phi)
+        if mu != 0 or phi != 0:
+            return (mu * self.params.global_params.v_w + 
+                    phi * self.params.global_params.v_f) / (mu + phi)
+        else:
+            return 0
     
     """Returns the index weight for this sector"""
     def get_index_weight(self):

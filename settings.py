@@ -140,3 +140,7 @@ class Settings:
         for key in self.is_default:
             if not (key == 'index_weight' or key == 'freq_max'):
                 self.set_is_default(key, False)
+
+    def set_all_defaults(self):
+        for key in self.is_default:
+            self.set_is_default(key, True)

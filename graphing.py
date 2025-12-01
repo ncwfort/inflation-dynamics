@@ -103,7 +103,7 @@ class GraphingHelper:
         plt.plot(a_x, a_y, label='Prices and Wages Change in Sync')
         plt.plot(b_x, b_y, color = 'red',
                  label = 'Prices and Wages Change Randomly')
-        plt.xlabel("Desire Offset (v_w - v_f)")
+        plt.xlabel("Aspiration Gap (v_w - v_f)")
         plt.ylabel("Average Inflation Rate")
         plt.title("Relationship Between Wage-Price Change Synchronization" + 
                   " and Average Inflation Rate")
