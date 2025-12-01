@@ -119,9 +119,6 @@ def simple_staggered_economy(n_periods):
     settings.set_sector_default('freq_f', 2)
     settings.set_sector_default('freq_w', 2)
     settings.set_sector_default('lag_w', 2)
-    settings.set_global_default('phi_bar', 0.1)
-    settings.set_global_default('mu_bar', 0.3)
-    settings.set_sector_default('w0', 0.575)
     settings.set_global_default('freq_max', 2)
     gen = Generator()
     economy = gen.generate(settings, 1)
@@ -131,7 +128,24 @@ def simple_staggered_economy(n_periods):
     # have learned that the magnitude of variation around equilibrium wage
     # share in either direction depends on which 'moves first'
 
+def semi_random(n_sectors, n_periods):
+    """
+    Allowing initial wages share, pricing and bargaining power to vary across
+    sectors.
+    """
+    settings = Settings()
+    settings.set_is_default('w0', False)
+    settings.set_is_default('phi_i', False)
+    settings.set_is_default('mu_i', False)
+    settings.rand_min['w0'] = 0.5
+    gen = Generator()
+    economy = gen.generate(settings, n_sectors)
+    economy.advance_n(n_periods)
+    gr = GraphingHelper()
+    gr.graph_yoy_inflation(economy)
+
 def main():
-    compare_lag_constraints()
+    semi_random(500, 200)
+
 if __name__ == '__main__':
     main()

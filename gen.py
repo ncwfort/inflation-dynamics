@@ -2,6 +2,7 @@ from settings import Settings
 from economy import Economy
 import random as rd
 from params import GlobalParams
+import numpy as np
 
 class Generator:
     """
@@ -105,8 +106,7 @@ class Generator:
         if settings.check_if_default(name):
             return 0
         else:
-            phi_bar = self.global_params.phi_bar
-            return rd.uniform(- phi_bar, 1 - phi_bar)
+            return np.random.normal(loc=0, scale=0.15)
         
     def get_mu_i(self):
         settings = self.settings
@@ -114,8 +114,7 @@ class Generator:
         if settings.check_if_default(name):
             return 0
         else:
-            mu_bar = self.global_params.mu_bar
-            return rd.uniform(-mu_bar, 1 - mu_bar)
+            return np.random.normal(loc=0, scale=0.15)
         
     def get_freq_w(self):
         settings = self.settings

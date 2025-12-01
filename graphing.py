@@ -22,8 +22,16 @@ class GraphingHelper:
         sector: Sector's wage share to be graphed.
         """
         wage_share_data = sector.get_wage_share_time_series()
-        self.basic_plot(wage_share_data)
-        plt.axhline(y = sector.get_ws_equilibrium()) #plot equilibrium as well
+        
+        x_indices = list(range(len(wage_share_data))) # get a list with all indices
+        plt.plot(x_indices, wage_share_data, label = 'Wage Share')
+        plt.ticklabel_format(useOffset=False)
+        plt.axhline(y = sector.get_ws_equilibrium(), color = 'red',
+                    label = "Equilibrium Wage Share") #plot equilibrium as well
+        plt.xlabel("Period")
+        plt.ylabel('Wage Share of Income')
+        
+        plt.legend()
         plt.show()
 
     def graph_wages_prices(self, sector):
@@ -100,12 +108,12 @@ class GraphingHelper:
         a_y = series_a[1]
         b_x = series_b[0]
         b_y = series_b[1]
-        plt.plot(a_x, a_y, label='Prices and Wages Change in Sync')
+        plt.plot(a_x, a_y, label='Constrained Case')
         plt.plot(b_x, b_y, color = 'red',
-                 label = 'Prices and Wages Change Randomly')
+                 label = 'Unconstrained Case')
         plt.xlabel("Aspiration Gap (v_w - v_f)")
         plt.ylabel("Average Inflation Rate")
-        plt.title("Relationship Between Wage-Price Change Synchronization" + 
+        plt.title("Wage-Price Change Synchronization" + 
                   " and Average Inflation Rate")
         plt.legend()
         plt.show()
