@@ -175,8 +175,19 @@ def run_stochastic(n_sectors, n_periods):
     gr = GraphingHelper()
     gr.graph_yoy_inflation(economy)
 
+def test_single_shocks(n_sectors, n_periods, shock_period, shock_size):
+    settings = Settings()
+    gen = Generator()
+    economy = gen.generate(settings, n_sectors)
+    economy.single_shocks = True
+    economy.advance_n(shock_period - 1)
+    economy.do_single_shock(shock_size)
+    economy.advance_n(n_periods - shock_period)
+    gr = GraphingHelper()
+    gr.graph_yoy_inflation(economy)
+
 def main():
-    run_stochastic(100, 100)
+    test_single_shocks(50, 100, 20, 0.05)
 
 if __name__ == '__main__':
     main()

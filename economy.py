@@ -13,11 +13,13 @@ class Economy:
         collection of multiple sectors and the updating of multiple sectors
         at a time. Also handles price index calculation."""
     
-    def __init__(self, global_params: GlobalParams, stochastic = False):
+    def __init__(self, global_params: GlobalParams, stochastic = False,
+                 single_persistent_shocks = False):
         self.global_params = global_params
         self.sectors = []
         self.periods = 1 # includes the inital values as a period
         self.stochastic = stochastic
+        self.single_shocks = single_persistent_shocks
         self.shocks = [0]
 
     def set_stochastic(self, value):
@@ -48,6 +50,8 @@ class Economy:
             sector.update() # uses sector's built-in update methods
         if self.stochastic:
             self.stochastic_shocks(ALPHA, SIGMA_ETA)
+        elif self.single_shocks:
+            self.track_single_shocks(ALPHA)
         self.periods += 1
     
     def get_sector(self, index):
@@ -190,5 +194,17 @@ class Economy:
         this_shock = alpha * self.shocks[-1] + np.random.normal(0, sigma_eta)
         self.shock_all_sectors(this_shock)
         self.shocks.append(this_shock)
+
+    def track_single_shocks(self, alpha, size = 0):
+        this_shock = alpha * self.shocks[-1] + size
+        for sector in self.sectors:
+            sector.shock_if_prices_update(this_shock)
+        self.shocks.append(this_shock)
+
+    def do_single_shock(self, size):
+        self.single_shocks = False
+        self.advance()
+        self.track_single_shocks(ALPHA, size)
+        self.single_shocks = True
 
 

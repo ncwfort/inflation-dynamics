@@ -140,6 +140,19 @@ class Sector:
         previous_price = self.prices[-2]
         self.prices[-1] += size * previous_price
 
+    def shock_if_prices_update(self, size):
+        """
+        Simulates a shock, but only if the sector's prices update in that
+        period. In general, called after regular price updating, so the period
+        to check is actuall the length of the prices list - 1.
+        """
+        last_period = len(self.prices) - 1
+        freq_f = self.params.get('freq_f')
+        lag_f = self.params.get('lag_f')
+        previous_price = self.prices[-2]
+        if (last_period - lag_f) % freq_f == 0:
+            self.prices[-1] += size * previous_price
+
 
 
     
