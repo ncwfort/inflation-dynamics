@@ -108,10 +108,10 @@ class GraphingHelper:
         a_y = series_a[1]
         b_x = series_b[0]
         b_y = series_b[1]
-        plt.plot(a_x, a_y, label='Constrained Case')
+        plt.plot(a_x, a_y, label='Synchronized')
         plt.plot(b_x, b_y, color = 'red',
-                 label = 'Unconstrained Case')
-        plt.xlabel("Aspiration Gap (v_w - v_f)")
+                 label = 'Unsynchronized')
+        plt.xlabel("Aspiration Gap ($v_w - v_f$)")
         plt.ylabel("Average Inflation Rate")
         plt.title("Wage-Price Change Synchronization" + 
                   " and Average Inflation Rate")

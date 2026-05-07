@@ -146,7 +146,6 @@ def semi_random(n_sectors, n_periods):
 
 def test_shock(n_sectors, n_periods, shock_period, shock_size):
     settings = Settings()
-    settings.set_global_default('mu_bar', 0.1)
     gen = Generator()
     economy = gen.generate(settings, n_sectors)
     economy.advance_n(shock_period)
@@ -187,7 +186,7 @@ def test_single_shocks(n_sectors, n_periods, shock_period, shock_size):
     gr.graph_yoy_inflation(economy)
 
 def main():
-    test_single_shocks(50, 100, 20, 0.05)
+    test_single_shocks(50, 100, 20, 0.01)
 
 if __name__ == '__main__':
     main()
