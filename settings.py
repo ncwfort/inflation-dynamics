@@ -13,10 +13,10 @@ SECTOR_DEFAULTS = {
     'w0' : 0.6,
     'p0' : 1.0,
     'a' : 1.0,
-    'freq_w' : 1.0,
-    'freq_f' : 1.0,
-    'lag_w' : 1.0,
-    'lag_f' : 1.0
+    'freq_w' : 1,
+    'freq_f' : 1,
+    'lag_w' : 1,
+    'lag_f' : 1
 }
 
 IS_DEFAULT = {
@@ -144,3 +144,7 @@ class Settings:
     def set_all_defaults(self):
         for key in self.is_default:
             self.set_is_default(key, True)
+
+    def set_all_lags_freqs_to_one(self):
+        self.set_is_default('freq_f', True)
+        self.set_is_default('freq_w', True)

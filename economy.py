@@ -5,7 +5,7 @@ from tqdm import tqdm
 import numpy as np
 
 # temporarily hard wiring constants here
-ALPHA = 0.99
+ALPHA = 0.6
 SIGMA_ETA = 0.01
 
 class Economy:

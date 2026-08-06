@@ -185,8 +185,20 @@ def test_single_shocks(n_sectors, n_periods, shock_period, shock_size):
     gr = GraphingHelper()
     gr.graph_yoy_inflation(economy)
 
+def single_shocks_one_sector(n_periods, shock_period, shock_size):
+    settings = Settings()
+    settings.set_all_lags_freqs_to_one()
+    gen = Generator()
+    economy = gen.generate(settings, 1)
+    economy.single_shocks = True
+    economy.advance_n(shock_period - 1)
+    economy.do_single_shock(shock_size)
+    economy.advance_n(n_periods - shock_period)
+    gr = GraphingHelper()
+    gr.graph_yoy_inflation(economy)
+
 def main():
-    test_single_shocks(50, 100, 20, 0.01)
+    single_shocks_one_sector(100, 20, 0.01)
 
 if __name__ == '__main__':
     main()

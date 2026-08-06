@@ -47,7 +47,6 @@ This will run the simulation and display a plot of the year-over-year inflation 
 *   `graphing.py`: Provides the `GraphingHelper` class for plotting simulation data.
 *   `rw.py`: Contains functions for reading data from CSV files.
 *   `test.py`: Contains test functions for verifying the model's behavior.
-*   `generator.py`: An older version of the economy generator. `gen.py` is the current version.
 
 ## Configuration
 
