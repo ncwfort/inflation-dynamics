@@ -36,6 +36,40 @@ python experiments.py
 
 This will run the simulation and display a plot of the year-over-year inflation rate.
 
+## Sample Output
+
+The figures below are produced by the model.
+
+### Wage share dynamics in a single sector
+
+The basic mechanism of the model. Workers target a wage share of $v_w = 0.7$ and firms target $v_f = 0.5$; because neither can set wages and prices at the same moment, the realized wage share cycles around the equilibrium value implied by the two aspirations rather than settling on it. Here wages and prices each adjust every second period, with wages moving one period out of step with prices.
+
+![Wage share in a single staggered sector](figures/wage_share.png)
+
+### An aggregate price shock
+
+Fifty sectors with heterogeneous adjustment frequencies and lags, hit by a one-time 5\% price shock to every sector in period 20. Note that the horizontal axis indexes the year-over-year series, which begins 12 periods into the simulation: the shock enters the series at index 8 and drops out of it twelve periods later, at index 20. Inflation does not return to its pre-shock path, since the higher price level feeds back into wage and price setting.
+
+![Year over year inflation following a 5 percent aggregate price shock](figures/aggregate_shock.png)
+
+### A decaying shock with staggered pass-through
+
+The same heterogeneous economy, but the shock reaches a sector only in the periods when that sector's prices are due to change, and it decays geometrically at rate $\alpha = 0.6$. Because sectors absorb the shock at different times, the peak is lower and the rise more gradual than under the simultaneous shock above.
+
+![Year over year inflation following a decaying shock with staggered pass-through](figures/persistent_shock.png)
+
+### Persistent stochastic shocks
+
+An economy subject to an autocorrelated aggregate shock in every period, smoothed with a six-period moving average. Staggered adjustment turns serially correlated shocks into long, slow swings in the inflation rate.
+
+![Year over year inflation under persistent stochastic shocks](figures/stochastic.png)
+
+### Synchronization and average inflation
+
+Average inflation as a function of the aspiration gap $v_w - v_f$, comparing economies in which wage and price adjustment are synchronized within each sector against economies in which they are not. Inflation rises roughly linearly in the aspiration gap, and unsynchronized adjustment produces higher average inflation for any given gap. Each point averages 20 simulations of a 20-sector economy over 100 periods.
+
+![Average inflation against the aspiration gap, synchronized versus unsynchronized](figures/synchronization.png)
+
 ## Overview of Files
 
 *   `economy.py`: Defines the `Economy` class, which manages the overall simulation.
