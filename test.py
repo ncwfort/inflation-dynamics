@@ -2,7 +2,6 @@ from params import GlobalParams
 from economy import Economy
 from graphing import GraphingHelper
 from sectors import Sector
-from generator import EconomyGenerator
 from gen import Generator
 from settings import Settings
 
